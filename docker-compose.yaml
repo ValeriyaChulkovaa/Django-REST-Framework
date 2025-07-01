@@ -50,6 +50,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: celery_beat
+    user: "postgres"
     command: >
       sh -c "celery -A conf beat --loglevel=info"
     env_file:
