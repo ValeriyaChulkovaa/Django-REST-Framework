@@ -1,18 +1,13 @@
 import os
 from pathlib import Path
 import sys
-from environs import Env
 from datetime import timedelta
-
-env = Env()
-env.read_env()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 SECRET_KEY = os.getenv("SECRET_KEY", "fallback-secret")
 
-DEBUG = env.bool("DEBUG")
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -112,8 +107,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-# AUTH_USER_MODEL = 'users.User'
-
 LOGIN_REDIRECT_URL = "/"
 
 LOGIN_URL = "/users.Login/"
@@ -123,8 +116,8 @@ EMAIL_HOST = "smtp.yandex.ru"
 EMAIL_PORT = 465
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
-EMAIL_HOST_USER = env.str("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
 
@@ -144,7 +137,7 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 }
 
-STRIPE_API_KEY = env.str("STRIPE_API_KEY")
+STRIPE_API_KEY = os.getenv("STRIPE_API_KEY")
 
 
 SWAGGER_SETTINGS = {
@@ -154,8 +147,8 @@ SWAGGER_SETTINGS = {
 }
 
 CELERY_TIMEZONE = TIME_ZONE
-CELERY_BROKER_URL = env.str("CELERY_BROKER_URL")
-CELERY_RESULT_BACKEND = env.str("CELERY_RESULT_BACKEND")
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
+CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND")
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 
 
