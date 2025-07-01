@@ -1,8 +1,5 @@
 # Используем официальный образ Python
 FROM python:3.12
-# Создание пользователя postgres
-RUN adduser --disabled-password --gecos '' postgres
-USER postgres
 WORKDIR /app
 # Копируем файл с зависимостями и устанавливаем их
 COPY requirements.txt ./
