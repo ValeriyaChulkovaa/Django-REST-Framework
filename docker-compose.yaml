@@ -35,7 +35,7 @@ services:
       dockerfile: Dockerfile
     container_name: celery_worker
     command: >
-      sh -c "celery -A config worker --loglevel=info"
+      sh -c "celery -A conf worker --loglevel=info"
     env_file:
       - .env
     volumes:
@@ -49,7 +49,7 @@ services:
       dockerfile: Dockerfile
     container_name: celery_beat
     command: >
-      sh -c "celery -A config beat --loglevel=info"
+      sh -c "celery -A conf beat --loglevel=info"
     env_file:
       - .env
     volumes:
