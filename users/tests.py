@@ -2,6 +2,7 @@ from django.contrib.auth.models import Group
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
+from unittest.mock import patch
 
 from materials.models import Course, Lesson, Payment
 
@@ -319,10 +320,21 @@ class PaymentTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(data, result)
 
-    def test_payment_create(self):
+    @patch("src.utils.stripe.checkout.Session.create")
+    @patch("src.utils.stripe.Price.create")
+    @patch("src.utils.stripe.Product.create")
+    def test_payment_create(self, mock_product, mock_price, mock_session):
         """
         Тест создания объекта Payment, автоматического заполнения поля owner и создания платежа в stripe
         """
+
+        # Настройка заглушек
+        mock_product.return_value = {"id": "prod_mock123"}
+        mock_price.return_value = {"id": "price_mock456"}
+        mock_session.return_value = {
+            "url": "https://mock-checkout-link.com ",
+            "id": "session_mock789"
+        }
 
         url = reverse("users:payments")
         data = {"amount": 10000, "payment_method": "cash", "lesson": self.lesson.pk}

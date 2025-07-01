@@ -1,10 +1,7 @@
 import stripe
-import os
-from dotenv import load_dotenv
 from django.contrib.auth.models import Group
+from conf.settings import STRIPE_API_KEY
 
-load_dotenv()
-STRIPE_API_KEY = os.getenv("STRIPE_API_KEY")
 stripe.api_key = STRIPE_API_KEY
 
 
