@@ -2,6 +2,7 @@
 FROM python:3.12
 # Создание пользователя postgres
 RUN adduser --disabled-password --gecos '' postgres
+USER postgres
 WORKDIR /app
 # Копируем файл с зависимостями и устанавливаем их
 COPY requirements.txt ./
@@ -10,7 +11,5 @@ RUN pip install -r requirements.txt
 COPY . .
 # Открываем порт 8000 для взаимодействия с приложением
 EXPOSE 8000
-# Запуск от имени postgres
-USER postgres
 # Определяем команду для запуска приложения
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
