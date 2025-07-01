@@ -1,6 +1,5 @@
 import stripe
 from django.contrib.auth.models import Group
-
 from conf.settings import STRIPE_API_KEY
 
 stripe.api_key = STRIPE_API_KEY
@@ -18,8 +17,11 @@ def create_stripe_product(instance):
     """
     Создания продукта в stripe
     """
-    instance_name = f"Оплата курса {instance.course.name}" if instance.course \
+    instance_name = (
+        f"Оплата курса {instance.course.name}"
+        if instance.course
         else f"Оплата урока {instance.lesson.name}"
+    )
     return stripe.Product.create(name=instance_name)
 
 
